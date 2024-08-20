@@ -1,14 +1,18 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const server = express();
+const mongoose = require('mongoose');
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+async function main() {
+    await mongoose.connect(process.env.MONGODB_URL);
+    console.log('database connected');
+}
 
-app.get('/', (req,res)=>{
-    res.status(200).send({
-        message: 'welcome to the dataBridgr server', status:true
-    })
+server.get('/', (req,res)=>{
+    res.json({status:'success'})
 })
 
-module.exports = app;
+server.listen(process.env.PORT, () => {
+    console.log('server started');
+});
+
+
